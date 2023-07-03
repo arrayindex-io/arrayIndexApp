@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>House Number Sum</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container animated-theme">
+    <h1>House Number Sum</h1>
+    <div class="how-to-use">
+      <p>
+        Welcome to the House Number Sum calculator! This calculator helps you find the single-digit sum of a house number. Simply enter the house number in the input field below and click "Calculate Sum" to get the result.
+      </p>
+      <p>
+        Example: If you enter the house number "1234", the calculator will provide the sum of its digits as the single-digit result, which in this case is "1 + 2 + 3 + 4 = 10" and then "1 + 0 = 1".
+      </p>
+      <strong>How to Use:</strong> Enter a house number and click "Calculate Sum" to get the single-digit sum.
+    </div>
+    <form id="houseNumberForm">
+      <label for="houseNumber">Enter House Number:</label>
+      <input type="text" id="houseNumber" name="houseNumber" required>
+      <button type="submit">Calculate Sum</button>
+    </form>
+    <div id="result"></div>
+  </div>
+
+  <script>
+    const form = document.getElementById('houseNumberForm');
+    const resultDiv = document.getElementById('result');
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const houseNumber = document.getElementById('houseNumber').value;
+      const url = `http://localhost:3000/api/sum-of-digits/${houseNumber}`;
+
+      fetch(url)
+        .then(response => response.text())
+        .then(data => {
+          const singleDigitSum = +data;
+          resultDiv.textContent = `Single-Digit Sum: ${singleDigitSum}`;
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          resultDiv.textContent = 'An error occurred.';
+        });
+    });
+  </script>
+</body>
+</html>
